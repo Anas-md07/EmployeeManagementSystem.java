@@ -1,0 +1,109 @@
+package project1;
+import java.util.*;
+
+class Employee01 {
+    int EMPID;
+    String EMPNAME;
+    String DEP;
+    float Salary;
+
+    Employee01(int EMPID, String EMPNAME, String DEP, float Salary) {
+        this.EMPID = EMPID;
+        this.EMPNAME = EMPNAME;
+        this.DEP = DEP;
+        this.Salary = Salary;
+    }
+}
+
+
+class EmployManagementSystem {
+
+    static Scanner sc = new Scanner(System.in);
+    static Employee01 employees[] = new Employee01[100];  
+    static int count = 0;                                  
+
+    static void Menu() {
+        System.out.println("\nClick 1 TO ADD The EMPLOYEE DETAIL");
+        System.out.println("Click 2 TO VIEW The EMPLOYEE DETAIL");
+        System.out.println("Click 3 TO DELETE The EMPLOYEE DETAIL");
+        System.out.println("Click 4 TO EXIT\n");
+    }
+
+
+    static void ADD() {
+
+        System.out.println("ENTER Employee ID: ");
+        int EMPID = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("ENTER Employee NAME: ");
+        String EMPNAME = sc.nextLine();
+
+        System.out.println("ENTER Employee DEPARTMENT: ");
+        String DEP = sc.nextLine();
+
+        System.out.println("ENTER Employee SALARY: ");
+        float Salary = sc.nextFloat();
+
+        employees[count] = new Employee01(EMPID, EMPNAME, DEP, Salary);
+        count++;
+
+        System.out.println("Employee Added Successfully!");
+    }
+
+
+    static void VIEW() {
+        if (count == 0) {
+            System.out.println("No Employees Found!");
+            return;
+        }
+
+        System.out.println("\n--- EMPLOYEE LIST ---");
+        for (int i = 0; i < count; i++) {
+            Employee01 e = employees[i];
+            System.out.println(e.EMPID + "  " + e.EMPNAME + "  " + e.DEP + "  " + e.Salary);
+        }
+    }
+
+
+    static void DELETE() {
+        System.out.println("ENTER Employee ID to DELETE:");
+        int DelID = sc.nextInt();
+
+        for (int i = 0; i < count; i++) {
+            if (employees[i].EMPID == DelID) {
+
+                for (int j = i; j < count - 1; j++) {
+                    employees[j] = employees[j + 1];
+                }
+
+                count--;
+                System.out.println("Employee Deleted!");
+                return;
+            }
+        }
+
+        System.out.println("Employee Not Found!");
+    }
+
+
+    public static void main(String[] args) {
+
+        while (true) {
+            Menu();
+            System.out.print("Enter Your Choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1 -> ADD();
+                case 2 -> VIEW();
+                case 3 -> DELETE();
+                case 4 -> {
+                    System.out.println("Exiting...");
+                    return;
+                }
+                default -> System.out.println("INVALID CHOICE!");
+            }
+        }
+    }
+}
